@@ -51,7 +51,6 @@ namespace MLIN.Views
                         game.State = GameState.Flying;
                     if (players.PlayerTwo.PiecesLeft == 2 && players.PlayerTwo.InvisiblePieces == 0)
                     {
-                        // game over logic
                         players.PlayerOne.IsPlayersTurn = false;
                         players.PlayerTwo.IsPlayersTurn = false;
                         game.Winner = players.PlayerOne.Name;
@@ -68,7 +67,6 @@ namespace MLIN.Views
                         game.State = GameState.Flying;
                     if (players.PlayerOne.PiecesLeft == 2 && players.PlayerOne.InvisiblePieces == 0)
                     {
-                        // game over logic
                         players.PlayerOne.IsPlayersTurn = false;
                         players.PlayerTwo.IsPlayersTurn = false;
                         game.Winner = players.PlayerTwo.Name;
@@ -82,7 +80,7 @@ namespace MLIN.Views
             {
                 if (tile.Status != TileStatus.Unoccupied)
                 {
-                    // can't place on top of another piece 
+
                 }
                 else if (players.PlayerOne.IsPlayersTurn)
                 {
@@ -115,7 +113,6 @@ namespace MLIN.Views
             else if (game.State == GameState.Moving)
             {
                 if (game.CurrentlyMovingPiece == null)
-                // This means that he hasn't selected a piece to move. Highlight the piece
                 {
                     if (players.PlayerOne.IsPlayersTurn && tile.Status == TileStatus.P1 ||
                         players.PlayerTwo.IsPlayersTurn && tile.Status == TileStatus.P2)
@@ -125,7 +122,6 @@ namespace MLIN.Views
                     }
                 }
                 else
-                // This means that he has already selected a piece to move selected
                 {
                     if (tile.Status == TileStatus.Unoccupied && game.CurrentlyMovingPiece.AdjacentTiles.Contains(tile))
                     {
@@ -155,7 +151,6 @@ namespace MLIN.Views
             else if (game.State == GameState.Flying)
             {
                 if (game.CurrentlyMovingPiece == null)
-                // This means that he hasn't selected a piece to move. Highlight the piece
                 {
                     if (players.PlayerOne.IsPlayersTurn && tile.Status == TileStatus.P1 ||
                         players.PlayerTwo.IsPlayersTurn && tile.Status == TileStatus.P2)
@@ -165,7 +160,6 @@ namespace MLIN.Views
                     }
                 }
                 else
-                // This means that he has already selected a piece to move selected
                 {
                     if (tile.Status == TileStatus.Unoccupied)
                     {
@@ -210,7 +204,6 @@ namespace MLIN.Views
                 System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(200));
                 if (currentState == SelectState.RemoveOpponentPiece)
                 {
-                    #region RemoveOpponentPiece
                     var possibleTiles = game.Tiles.Where(x => x.Status == TileStatus.P1);
                     Random r = new Random();
                     var index = r.Next(possibleTiles.Count());
@@ -223,7 +216,6 @@ namespace MLIN.Views
                         game.State = GameState.Flying;
                     if (players.PlayerOne.PiecesLeft == 2 && players.PlayerOne.InvisiblePieces == 0)
                     {
-                        // game over logic
                         players.PlayerOne.IsPlayersTurn = false;
                         players.PlayerTwo.IsPlayersTurn = false;
                         game.Winner = players.PlayerTwo.Name;
@@ -231,11 +223,9 @@ namespace MLIN.Views
                     }
                     currentState = SelectState.Neutral;
                     players.SwitchTurns();
-                    #endregion
                 }
                 else if (game.State == GameState.Placing)
                 {
-                    #region Placing
                     var openTiles = game.Tiles.Where(x => x.Status == TileStatus.Unoccupied);
                     Random r = new Random();
                     int tileIndex = r.Next(openTiles.Count());
@@ -258,11 +248,9 @@ namespace MLIN.Views
                         currentState = SelectState.Neutral;
                         game.State = GameState.Moving;
                     }
-                    #endregion
                 }
                 else if (game.State == GameState.Moving || game.State == GameState.Flying)
                 {
-                    #region Moving
                     var myTiles = game.Tiles.Where(x => x.Status == TileStatus.P2);
                     var contprog = false;
                     Random r = new Random();
@@ -293,7 +281,6 @@ namespace MLIN.Views
                     { 
                         players.SwitchTurns();
                     }
-                    #endregion
                 }
             }
             else if (players.PlayerTwo.IsPlayersTurn && players.PlayerTwo.IsComputer)
@@ -308,23 +295,14 @@ namespace MLIN.Views
             if (ellipse == null) return;
             var tile = game.Tiles.FirstOrDefault(t => ellipse.Tag as string == t.TileName);
             if (tile == null) return;
-
-
-            //currentlyMovingPiece = null;
         }
 
         private void MouseMovesOut(object sender, MouseEventArgs e)
         {
-
         }
 
         private void ellipse_MouseMove(object sender, MouseEventArgs e)
         {
-            //var ellipse = sender as Ellipse;
-            //if (ellipse != null && e.LeftButton == MouseButtonState.Pressed)
-            //{
-            //    DragDrop.DoDragDrop(ellipse, ellipse.Fill.ToString(), DragDropEffects.Move);
-            //}
         }
 
         private void ellipse_GiveFeedback(object sender, GiveFeedbackEventArgs e)

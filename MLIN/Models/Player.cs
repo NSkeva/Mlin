@@ -88,7 +88,7 @@ namespace MLIN.Models
                 tofill = new Mill(tiles[a], tiles[b], tiles[c]);
         }
 
-        /////////// Board Pattern //////////
+        /////////// Ploca //////////
         //
         //  [0]           [1]            [2]
         //      [8]       [9]       [10]
@@ -125,7 +125,6 @@ namespace MLIN.Models
             checkMill(4, 12, 20, movedTile, ts, tiles, ref currentMill);
             checkMill(6, 14, 22, movedTile, ts, tiles, ref currentMill);
 
-            // Check validity
             if (currentMill == null) return false;
             currentMill.Turn = Turn;
 
@@ -134,7 +133,6 @@ namespace MLIN.Models
                 currentMill.Third != movedTile)
                 return false;
 
-            // Check that he's not going back and forth from two mills
             if (PreviousMills.Count > 1 && currentMill.Equals(PreviousMills[PreviousMills.Count - 2]) && currentMill.Turn - PreviousMills[PreviousMills.Count - 2].Turn <= 2)
                 return false;
 

@@ -26,7 +26,6 @@ namespace MLIN.Views
 
         private void NextButtonClick(object sender, RoutedEventArgs e)
         {
-            //TODO: Add validation checking
             var gamePage = new GamePage();
             this.Content = gamePage;
         }
