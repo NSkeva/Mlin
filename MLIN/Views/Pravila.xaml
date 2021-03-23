@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="MLIN.Views.Pravila"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MLIN.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="156,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="624" Width="1085" FontSize="25" Foreground="Black"><Run Text="Tijek igre se zapravo sastoji od tri faze:"/><LineBreak/><Run/><LineBreak/><Run Text="Na samom početku ploča je prazna. Prvo igraju crni, pa se naizmjenično postavlja jedna po jedna figura na slobodnu presječnu točku. U ovoj fazi se postavljaju nove figure, a one na Ploči se i dalje ne smiju pomicati. Ako igrač u ovoj fazi formira mlin, odmah dobiva pravo ukloniti jednu protivničku figuru s Ploče. Tako se nakon devet poteza sve figure uvedu u igru."/><LineBreak/><Run Text="Kada su sve figure uvedene u igu počinje druga faza. Igrači naizmjenično pomiču jednu po jednu svoju figuru. One se pomiču duž linija do susjedne točke. U ovoj fazi se može pomaknuti jedna figura iz formiranog mlina, a u sljedećem se potezu smiju ponovno formirati i iznova uklanjati protivničke figure. Kako bi rasformirali formirani mlin, koristi se termin 'otvaranje', a kada se on ponovno formira koristi se termin 'zatvaranje'. Čim igrač ostaje sa samo tri figure, nakon odigranih mlinova, samo on ulazi u treću fazu igre."/><LineBreak/><Run Text="U ovoj fazi igrač koji ostaje s tri figure ima pravo da bilo koju od njih prebacuje na bilo koje polje koje je na ploči slobodno. Ako u međuvremenu i protivnik ostane sa tri figure, tada i on ulazi u tu, treću fazu igre. Ovo znači da figure oba igrača mogu skakati od polja do polja, neovisno o tome kako su postavljene linije spajanja na ploči. Igra se može završiti već u drugoj fazi blokiranjem. Ako u trećoj fazi jedan od igrača nema što za odigrati, izgubio je partiju i završena je igra."/></TextBlock>
+        <Button Content="BACK" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="151" Height="171" Click="Back" FontSize="25"/>
+
+    </Grid>
+</UserControl>

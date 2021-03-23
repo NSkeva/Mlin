@@ -1,0 +1,14 @@
+﻿<Window x:Class="MLIN.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:MLIN.Views"
+        Title="MLIN" Height="720" Width="1280" ResizeMode="NoResize" FontSize="0.01">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="87*"/>
+            <ColumnDefinition Width="19*"/>
+            <ColumnDefinition Width="291*"/>
+        </Grid.ColumnDefinitions>
+        <ContentControl Content="{Binding Source={StaticResource ViewModelLocator}, Path=MainWindowViewModel.CurrentControl}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Margin="0,0,-0.333,0"/>
+    </Grid>
+</Window>
