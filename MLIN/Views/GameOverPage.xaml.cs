@@ -24,5 +24,11 @@ namespace MLIN.Views
         {
             InitializeComponent();
         }
+
+        private void Back(object sender, RoutedEventArgs e)
+        {
+            var homePage = new HomePage();
+            Content = homePage;
+        }
     }
 }
