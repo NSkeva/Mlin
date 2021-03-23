@@ -52,7 +52,7 @@
             <Setter Property="Margin" Value="20,0,10,0"/>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -68,7 +68,7 @@
         <TextBox Grid.Row="2" Text="{Binding PlayerTwo.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  Style="{StaticResource NameTextBoxStyle}" MaxLength="16" MaxLines="1"/>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Computer?" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="AI?" FontSize="24" FontWeight="Bold"/>
             <CheckBox HorizontalAlignment="Center"  IsChecked="{Binding PlayerTwo.IsComputer}">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="2" ScaleY="2"/>

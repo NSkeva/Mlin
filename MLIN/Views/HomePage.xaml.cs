@@ -24,5 +24,10 @@ namespace MLIN.Views
             var PravilaPage = new Pravila();
             Content = PravilaPage;
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

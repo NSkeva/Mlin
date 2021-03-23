@@ -9,11 +9,11 @@ namespace MLIN.Models
         public static readonly Brush UnoccupiedColor = Brushes.White;
         public static Brush P1Color
         {
-            get { return Brushes.Aqua; }
+            get { return Brushes.CadetBlue; }
         }
         public static Brush P2Color
         {
-            get { return Brushes.BlueViolet; }
+            get { return Brushes.Coral; }
         }
         private Brush fillColor;
         private int strokeThickness;

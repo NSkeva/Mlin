@@ -12,7 +12,7 @@
         <SolidColorBrush x:Key="TileStroke">Black</SolidColorBrush>
     </UserControl.Resources>
 
-    <ItemsControl ItemsSource="{Binding Game.Tiles}">
+    <ItemsControl ItemsSource="{Binding Game.Tiles}" HorizontalAlignment="Center" VerticalAlignment="Center">
         <ItemsControl.Background>
             <ImageBrush ImageSource="ploca.jpg"/>
         </ItemsControl.Background>
