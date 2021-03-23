@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace MLIN.Models
 {
-    public class Tile : ReactiveObject
+    public class Krug : ReactiveObject
     {
         public static readonly Brush UnoccupiedColor = Brushes.White;
         public static Brush P1Color
@@ -17,17 +17,17 @@ namespace MLIN.Models
         }
         private Brush fillColor;
         private int strokeThickness;
-        private TileStatus tileStatus;
+        private KrugStatus krugStatus;
 
-        public Tile()
+        public Krug()
         {
-            Status = TileStatus.Unoccupied;
+            Status = KrugStatus.Prazno;
             StrokeThickness = 0;
         }
 
-        public TileStatus Status
+        public KrugStatus Status
         {
-            get { return tileStatus; }
+            get { return krugStatus; }
             set { OnTileStatusChanged(value); }
         }
         public Brush FillColor
@@ -40,10 +40,10 @@ namespace MLIN.Models
             get { return strokeThickness; }
             set { this.RaiseAndSetIfChanged(ref strokeThickness, value); }
         }
-        public string TileName { get; set; }
+        public string KrugIme { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
-        public IEnumerable<Tile> AdjacentTiles { get; set; }
+        public IEnumerable<Krug> SusjedniKrugovi { get; set; }
 
         public void Highlight()
         {
@@ -55,15 +55,15 @@ namespace MLIN.Models
             StrokeThickness = 0;
         }
 
-        private void OnTileStatusChanged(TileStatus value)
+        private void OnTileStatusChanged(KrugStatus value)
         {
-            if (value == TileStatus.Unoccupied)
+            if (value == KrugStatus.Prazno)
                 FillColor = UnoccupiedColor;
-            if (value == TileStatus.P1)
+            if (value == KrugStatus.P1)
                 FillColor = P1Color;
-            if (value == TileStatus.P2)
+            if (value == KrugStatus.P2)
                 FillColor = P2Color;
-            this.RaiseAndSetIfChanged(ref tileStatus, value);
+            this.RaiseAndSetIfChanged(ref krugStatus, value);
         }
     }
 }

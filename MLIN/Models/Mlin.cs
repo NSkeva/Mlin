@@ -2,21 +2,21 @@
 
 namespace MLIN.Models
 {
-    public class Mill : IEquatable<Mill>
+    public class Mlin : IEquatable<Mlin>
     {
-        public Tile First { get; set; }
-        public Tile Second { get; set; }
-        public Tile Third { get; set; }
+        public Krug First { get; set; }
+        public Krug Second { get; set; }
+        public Krug Third { get; set; }
         public int Turn { get; set; }
 
-        public Mill(Tile first, Tile second, Tile third)
+        public Mlin(Krug first, Krug second, Krug third)
         {
             First = first;
             Second = second;
             Third = third;
         }
 
-        public bool Equals(Mill other)
+        public bool Equals(Mlin other)
         {
             return First == other.First &&
                    Second == other.Second &&

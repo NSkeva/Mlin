@@ -7,36 +7,36 @@ namespace MLIN.ViewModels
     {
         public PlayerViewModel()
         {
-            PlayerOne = new Player { IsPlayersTurn = true, Name = "Player 1" };
-            PlayerTwo = new Player { IsPlayersTurn = false, Name = "Player 2" };
+            Igrac1 = new Igrac { NaPotezu = true, Ime = "Igrac 1" };
+            Igrac2 = new Igrac { NaPotezu = false, Ime = "Igrac 2" };
         }
 
-        private Player playerOne;
-        public Player PlayerOne
+        private Igrac playerOne;
+        public Igrac Igrac1
         {
             get { return playerOne; }
             set { this.RaiseAndSetIfChanged(ref playerOne, value); }
         }
 
-        private Player playerTwo;
-        public Player PlayerTwo
+        private Igrac playerTwo;
+        public Igrac Igrac2
         {
             get { return playerTwo; }
             set { this.RaiseAndSetIfChanged(ref playerTwo, value); }
         }
 
-        public void SwitchTurns()
+        public void ZamjeniPotez()
         {
-            if (PlayerOne.IsPlayersTurn)
+            if (Igrac1.NaPotezu)
             {
-                PlayerOne.Turn++;
+                Igrac1.Potez++;
             }
-            if (PlayerTwo.IsPlayersTurn)
+            if (Igrac2.NaPotezu)
             {
-                PlayerTwo.Turn++;
+                Igrac2.Potez++;
             }
-            PlayerOne.IsPlayersTurn = !PlayerOne.IsPlayersTurn;
-            PlayerTwo.IsPlayersTurn = !PlayerTwo.IsPlayersTurn;
+            Igrac1.NaPotezu = !Igrac1.NaPotezu;
+            Igrac2.NaPotezu = !Igrac2.NaPotezu;
         }
     }
 }

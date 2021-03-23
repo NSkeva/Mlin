@@ -22,270 +22,268 @@ namespace MLIN.Views
         }
 
         static Game game = ViewModelLocator.GameViewModel.Game;
-        static PlayerViewModel players = ViewModelLocator.PlayerViewModel;
+        static PlayerViewModel igraci = ViewModelLocator.PlayerViewModel;
 
-        enum SelectState
+        enum OdabranoStanje
         {
-            Neutral,
-            PlaceNew,
-            RemoveOpponentPiece,
-            MoveExisting
+            Neutralno,
+            PostaviNovo,
+            MicanjeFigure,
+            MicanjePostojece
         }
 
-        private static SelectState currentState = SelectState.Neutral;
+        private static OdabranoStanje trenutnoStanje = OdabranoStanje.Neutralno;
 
         private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var ellipse = sender as Ellipse;
             if (ellipse == null) return;
-            var tile = game.Tiles.FirstOrDefault(t => ellipse.Tag as string == t.TileName);
-            if (tile == null) return;
+            var krug = game.Krugovi.FirstOrDefault(t => ellipse.Tag as string == t.KrugIme);
+            if (krug == null) return;
 
-            if (currentState == SelectState.RemoveOpponentPiece)
+            if (trenutnoStanje == OdabranoStanje.MicanjeFigure)
             {
-                if (players.PlayerOne.IsPlayersTurn && tile.Status == TileStatus.P2)
+                if (igraci.Igrac1.NaPotezu && krug.Status == KrugStatus.P2)
                 {
-                    tile.Status = TileStatus.Unoccupied;
-                    players.PlayerTwo.PiecesLeft--;
-                    if (players.PlayerTwo.PiecesLeft == 3 && players.PlayerTwo.InvisiblePieces == 0)
-                        game.State = GameState.Flying;
-                    if (players.PlayerTwo.PiecesLeft == 2 && players.PlayerTwo.InvisiblePieces == 0)
+                    krug.Status = KrugStatus.Prazno;
+                    igraci.Igrac2.FiguricaOstalo--;
+                    if (igraci.Igrac2.FiguricaOstalo == 3 && igraci.Igrac2.NevidljiveFigure == 0)
+                        game.State = GameState.Skakanje;
+                    if (igraci.Igrac2.FiguricaOstalo == 2 && igraci.Igrac2.NevidljiveFigure == 0)
                     {
-                        players.PlayerOne.IsPlayersTurn = false;
-                        players.PlayerTwo.IsPlayersTurn = false;
-                        game.Winner = players.PlayerOne.Name;
+                        igraci.Igrac1.NaPotezu = false;
+                        igraci.Igrac2.NaPotezu = false;
+                        game.Winner = igraci.Igrac1.Ime;
                         this.Content = new GameOverPage();
                     }
-                    currentState = SelectState.Neutral;
-                    players.SwitchTurns();
+                    trenutnoStanje = OdabranoStanje.Neutralno;
+                    igraci.ZamjeniPotez();
                 }
-                else if (players.PlayerTwo.IsPlayersTurn && tile.Status == TileStatus.P1)
+                else if (igraci.Igrac2.NaPotezu && krug.Status == KrugStatus.P1)
                 {
-                    tile.Status = TileStatus.Unoccupied;
-                    players.PlayerOne.PiecesLeft--;
-                    if (players.PlayerOne.PiecesLeft == 3 && players.PlayerOne.InvisiblePieces == 0)
-                        game.State = GameState.Flying;
-                    if (players.PlayerOne.PiecesLeft == 2 && players.PlayerOne.InvisiblePieces == 0)
+                    krug.Status = KrugStatus.Prazno;
+                    igraci.Igrac1.FiguricaOstalo--;
+                    if (igraci.Igrac1.FiguricaOstalo == 3 && igraci.Igrac1.NevidljiveFigure == 0)
+                        game.State = GameState.Skakanje;
+                    if (igraci.Igrac1.FiguricaOstalo == 2 && igraci.Igrac1.NevidljiveFigure == 0)
                     {
-                        players.PlayerOne.IsPlayersTurn = false;
-                        players.PlayerTwo.IsPlayersTurn = false;
-                        game.Winner = players.PlayerTwo.Name;
+                        igraci.Igrac1.NaPotezu = false;
+                        igraci.Igrac2.NaPotezu = false;
+                        game.Winner = igraci.Igrac2.Ime;
                         this.Content = new GameOverPage();
                     }
-                    currentState = SelectState.Neutral;
-                    players.SwitchTurns();
+                    trenutnoStanje = OdabranoStanje.Neutralno;
+                    igraci.ZamjeniPotez();
                 }
             }
-            else if (game.State == GameState.Placing)
+            else if (game.State == GameState.Postavljanje)
             {
-                if (tile.Status != TileStatus.Unoccupied)
+                if (krug.Status != KrugStatus.Prazno)
                 {
 
                 }
-                else if (players.PlayerOne.IsPlayersTurn)
+                else if (igraci.Igrac1.NaPotezu)
                 {
-                    tile.Status = TileStatus.P1;
-                    players.PlayerOne.InvisiblePieces--;
-                    players.PlayerOne.PiecesLeft++;
-                    if (players.PlayerOne.AddNewMills(game.Tiles, TileStatus.P1, tile))
+                    krug.Status = KrugStatus.P1;
+                    igraci.Igrac1.NevidljiveFigure--;
+                    igraci.Igrac1.FiguricaOstalo++;
+                    if (igraci.Igrac1.NoviMlinovi(game.Krugovi, KrugStatus.P1, krug))
                     {
-                        currentState = SelectState.RemoveOpponentPiece;
+                        trenutnoStanje = OdabranoStanje.MicanjeFigure;
                     }
-                    else players.SwitchTurns();
+                    else igraci.ZamjeniPotez();
                 }
-                else if (players.PlayerTwo.IsPlayersTurn)
+                else if (igraci.Igrac2.NaPotezu)
                 {
-                    tile.Status = TileStatus.P2;
-                    players.PlayerTwo.InvisiblePieces--;
-                    players.PlayerTwo.PiecesLeft++;
-                    if (players.PlayerTwo.AddNewMills(game.Tiles, TileStatus.P2, tile))
+                    krug.Status = KrugStatus.P2;
+                    igraci.Igrac2.NevidljiveFigure--;
+                    igraci.Igrac2.FiguricaOstalo++;
+                    if (igraci.Igrac2.NoviMlinovi(game.Krugovi, KrugStatus.P2, krug))
                     {
-                        currentState = SelectState.RemoveOpponentPiece;
+                        trenutnoStanje = OdabranoStanje.MicanjeFigure;
                     }
-                    else players.SwitchTurns();
+                    else igraci.ZamjeniPotez();
                 }
-                if (players.PlayerOne.InvisiblePieces == 0 &&
-                    players.PlayerTwo.InvisiblePieces == 0)
+                if (igraci.Igrac1.NevidljiveFigure == 0 &&
+                    igraci.Igrac2.NevidljiveFigure == 0)
                 {
-                    game.State = GameState.Moving;
+                    game.State = GameState.Kretanje;
                 }
             }
-            else if (game.State == GameState.Moving)
+            else if (game.State == GameState.Kretanje)
             {
                 if (game.CurrentlyMovingPiece == null)
                 {
-                    if (players.PlayerOne.IsPlayersTurn && tile.Status == TileStatus.P1 ||
-                        players.PlayerTwo.IsPlayersTurn && tile.Status == TileStatus.P2)
+                    if (igraci.Igrac1.NaPotezu && krug.Status == KrugStatus.P1 ||
+                        igraci.Igrac2.NaPotezu && krug.Status == KrugStatus.P2)
                     {
-                        game.CurrentlyMovingPiece = tile;
-                        tile.Highlight();
+                        game.CurrentlyMovingPiece = krug;
+                        krug.Highlight();
                     }
                 }
                 else
                 {
-                    if (tile.Status == TileStatus.Unoccupied && game.CurrentlyMovingPiece.AdjacentTiles.Contains(tile))
+                    if (krug.Status == KrugStatus.Prazno && game.CurrentlyMovingPiece.SusjedniKrugovi.Contains(krug))
                     {
-                        tile.Status = game.CurrentlyMovingPiece.Status;
-                        game.CurrentlyMovingPiece.Status = TileStatus.Unoccupied;
-                        if (players.PlayerOne.IsPlayersTurn)
+                        krug.Status = game.CurrentlyMovingPiece.Status;
+                        game.CurrentlyMovingPiece.Status = KrugStatus.Prazno;
+                        if (igraci.Igrac1.NaPotezu)
                         {
-                            if (players.PlayerOne.AddNewMills(game.Tiles, TileStatus.P1, tile))
+                            if (igraci.Igrac1.NoviMlinovi(game.Krugovi, KrugStatus.P1, krug))
                             {
-                                currentState = SelectState.RemoveOpponentPiece;
+                                trenutnoStanje = OdabranoStanje.MicanjeFigure;
                             }
-                            else players.SwitchTurns();
+                            else igraci.ZamjeniPotez();
                         }
-                        else if (players.PlayerTwo.IsPlayersTurn)
+                        else if (igraci.Igrac2.NaPotezu)
                         {
-                            if (players.PlayerTwo.AddNewMills(game.Tiles, TileStatus.P2, tile))
+                            if (igraci.Igrac2.NoviMlinovi(game.Krugovi, KrugStatus.P2, krug))
                             {
-                                currentState = SelectState.RemoveOpponentPiece;
+                                trenutnoStanje = OdabranoStanje.MicanjeFigure;
                             }
-                            else players.SwitchTurns();
+                            else igraci.ZamjeniPotez();
                         }
                     }
                     game.CurrentlyMovingPiece.UnHighlight();
                     game.CurrentlyMovingPiece = null;
                 }
             }
-            else if (game.State == GameState.Flying)
+            else if (game.State == GameState.Skakanje)
             {
                 if (game.CurrentlyMovingPiece == null)
                 {
-                    if (players.PlayerOne.IsPlayersTurn && tile.Status == TileStatus.P1 ||
-                        players.PlayerTwo.IsPlayersTurn && tile.Status == TileStatus.P2)
+                    if (igraci.Igrac1.NaPotezu && krug.Status == KrugStatus.P1 ||
+                        igraci.Igrac2.NaPotezu && krug.Status == KrugStatus.P2)
                     {
-                        game.CurrentlyMovingPiece = tile;
-                        tile.Highlight();
+                        game.CurrentlyMovingPiece = krug;
+                        krug.Highlight();
                     }
                 }
                 else
                 {
-                    if (tile.Status == TileStatus.Unoccupied)
+                    if (krug.Status == KrugStatus.Prazno)
                     {
-                        tile.Status = game.CurrentlyMovingPiece.Status;
-                        game.CurrentlyMovingPiece.Status = TileStatus.Unoccupied;
-                        if (players.PlayerOne.IsPlayersTurn)
+                        krug.Status = game.CurrentlyMovingPiece.Status;
+                        game.CurrentlyMovingPiece.Status = KrugStatus.Prazno;
+                        if (igraci.Igrac1.NaPotezu)
                         {
-                            if (players.PlayerOne.AddNewMills(game.Tiles, TileStatus.P1, tile))
+                            if (igraci.Igrac1.NoviMlinovi(game.Krugovi, KrugStatus.P1, krug))
                             {
-                                currentState = SelectState.RemoveOpponentPiece;
+                                trenutnoStanje = OdabranoStanje.MicanjeFigure;
                             }
-                            else players.SwitchTurns();
+                            else igraci.ZamjeniPotez();
                         }
-                        else if (players.PlayerTwo.IsPlayersTurn)
+                        else if (igraci.Igrac2.NaPotezu)
                         {
-                            if (players.PlayerTwo.AddNewMills(game.Tiles, TileStatus.P2, tile))
+                            if (igraci.Igrac2.NoviMlinovi(game.Krugovi, KrugStatus.P2, krug))
                             {
-                                currentState = SelectState.RemoveOpponentPiece;
+                                trenutnoStanje = OdabranoStanje.MicanjeFigure;
                             }
-                            else players.SwitchTurns();
+                            else igraci.ZamjeniPotez();
                         }
                     }
                     game.CurrentlyMovingPiece.UnHighlight();
                     game.CurrentlyMovingPiece = null;
                 }
             }
-            if (players.PlayerOne.IsPlayersTurn && players.PlayerOne.IsComputer)
+            if (igraci.Igrac1.NaPotezu && igraci.Igrac1.IsComputer)
             {
-                PlayComputer();
+                IgraKompjutor();
             }
-            else if(players.PlayerTwo.IsPlayersTurn && players.PlayerTwo.IsComputer)
+            else if(igraci.Igrac2.NaPotezu && igraci.Igrac2.IsComputer)
             {
-                PlayComputer();
+                IgraKompjutor();
             }
         }
 
-        private void PlayComputer()
+        private void IgraKompjutor()
         {
-            if (players.PlayerTwo.IsPlayersTurn && players.PlayerTwo.IsComputer)
+            if (igraci.Igrac2.NaPotezu && igraci.Igrac2.IsComputer)
             {
 
                 System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(200));
-                if (currentState == SelectState.RemoveOpponentPiece)
+                if (trenutnoStanje == OdabranoStanje.MicanjeFigure)
                 {
-                    var possibleTiles = game.Tiles.Where(x => x.Status == TileStatus.P1);
+                    var moguciKrugovi = game.Krugovi.Where(x => x.Status == KrugStatus.P1);
                     Random r = new Random();
-                    var index = r.Next(possibleTiles.Count());
-                    var tileA = possibleTiles.ToArray()[index];
-                    var tile = game.Tiles.FirstOrDefault(x => x.TileName == tileA.TileName);
-                    tile.Status = TileStatus.Unoccupied;
-                    Debug.WriteLine("{0} removing tile {1}", players.PlayerTwo.Name, tile.TileName);
-                    players.PlayerOne.PiecesLeft--;
-                    if (players.PlayerOne.PiecesLeft == 3 && players.PlayerOne.InvisiblePieces == 0)
-                        game.State = GameState.Flying;
-                    if (players.PlayerOne.PiecesLeft == 2 && players.PlayerOne.InvisiblePieces == 0)
+                    var index = r.Next(moguciKrugovi.Count());
+                    var krugA = moguciKrugovi.ToArray()[index];
+                    var krug = game.Krugovi.FirstOrDefault(x => x.KrugIme == krugA.KrugIme);
+                    krug.Status = KrugStatus.Prazno;
+                    igraci.Igrac1.FiguricaOstalo--;
+                    if (igraci.Igrac1.FiguricaOstalo == 3 && igraci.Igrac1.NevidljiveFigure == 0)
+                        game.State = GameState.Skakanje;
+                    if (igraci.Igrac1.FiguricaOstalo == 2 && igraci.Igrac1.NevidljiveFigure == 0)
                     {
-                        players.PlayerOne.IsPlayersTurn = false;
-                        players.PlayerTwo.IsPlayersTurn = false;
-                        game.Winner = players.PlayerTwo.Name;
+                        igraci.Igrac1.NaPotezu = false;
+                        igraci.Igrac2.NaPotezu = false;
+                        game.Winner = igraci.Igrac2.Ime;
                         this.Content = new GameOverPage();
                     }
-                    currentState = SelectState.Neutral;
-                    players.SwitchTurns();
+                    trenutnoStanje = OdabranoStanje.Neutralno;
+                    igraci.ZamjeniPotez();
                 }
-                else if (game.State == GameState.Placing)
+                else if (game.State == GameState.Postavljanje)
                 {
-                    var openTiles = game.Tiles.Where(x => x.Status == TileStatus.Unoccupied);
+                    var slobodniKrugovi = game.Krugovi.Where(x => x.Status == KrugStatus.Prazno);
                     Random r = new Random();
-                    int tileIndex = r.Next(openTiles.Count());
-                    var tile = openTiles.ToArray()[tileIndex];
-                    Debug.WriteLine("{0} {1}", players.PlayerTwo.Name, tile.TileName);
-                    game.Tiles.FirstOrDefault(x => x.TileName == tile.TileName).Status = TileStatus.P2;
-                    players.PlayerTwo.InvisiblePieces--;
-                    players.PlayerTwo.PiecesLeft++;
-                    if (players.PlayerTwo.AddNewMills(game.Tiles, TileStatus.P2, tile))
+                    int krugIndeks = r.Next(slobodniKrugovi.Count());
+                    var krug = slobodniKrugovi.ToArray()[krugIndeks];
+                    game.Krugovi.FirstOrDefault(x => x.KrugIme == krug.KrugIme).Status = KrugStatus.P2;
+                    igraci.Igrac2.NevidljiveFigure--;
+                    igraci.Igrac2.FiguricaOstalo++;
+                    if (igraci.Igrac2.NoviMlinovi(game.Krugovi, KrugStatus.P2, krug))
                     {
-                        currentState = SelectState.RemoveOpponentPiece;
+                        trenutnoStanje = OdabranoStanje.MicanjeFigure;
                     }
                     else
                     {
-                        players.SwitchTurns();
+                        igraci.ZamjeniPotez();
                     }
 
-                    if (players.PlayerOne.InvisiblePieces == 0 && players.PlayerTwo.InvisiblePieces == 0)
+                    if (igraci.Igrac1.NevidljiveFigure == 0 && igraci.Igrac2.NevidljiveFigure == 0)
                     {
-                        currentState = SelectState.Neutral;
-                        game.State = GameState.Moving;
+                        trenutnoStanje = OdabranoStanje.Neutralno;
+                        game.State = GameState.Kretanje;
                     }
                 }
-                else if (game.State == GameState.Moving || game.State == GameState.Flying)
+                else if (game.State == GameState.Kretanje || game.State == GameState.Skakanje)
                 {
-                    var myTiles = game.Tiles.Where(x => x.Status == TileStatus.P2);
+                    var mojiKrugovi = game.Krugovi.Where(x => x.Status == KrugStatus.P2);
                     var contprog = false;
                     Random r = new Random();
-                    Tile newTile = null;
+                    Krug noviKrug = null;
                     while (!contprog)
                     {
-                        var index = r.Next(myTiles.Count());
-                        var tile = myTiles.ToArray()[index];
-                        var possible = tile.AdjacentTiles.ToArray();
-                        for (int i = 0; i < possible.Count(); i++)
+                        var indeks = r.Next(mojiKrugovi.Count());
+                        var krug = mojiKrugovi.ToArray()[indeks];
+                        var moguce = krug.SusjedniKrugovi.ToArray();
+                        for (int i = 0; i < moguce.Count(); i++)
                         {
-                            var current = game.Tiles.FirstOrDefault(x => x.TileName == possible[i].TileName);
-                            if (current.Status == TileStatus.Unoccupied)
+                            var current = game.Krugovi.FirstOrDefault(x => x.KrugIme == moguce[i].KrugIme);
+                            if (current.Status == KrugStatus.Prazno)
                             {
-                                current.Status = TileStatus.P2;
-                                game.Tiles.FirstOrDefault(x => x.TileName == tile.TileName).Status = TileStatus.Unoccupied;
-                                newTile = current;
+                                current.Status = KrugStatus.P2;
+                                game.Krugovi.FirstOrDefault(x => x.KrugIme == krug.KrugIme).Status = KrugStatus.Prazno;
+                                noviKrug = current;
                                 contprog = true;
                                 break;
                             }
                         }
                     }
-                    if (players.PlayerTwo.AddNewMills(game.Tiles, TileStatus.P2, newTile))
+                    if (igraci.Igrac2.NoviMlinovi(game.Krugovi, KrugStatus.P2, noviKrug))
                     {
-                        currentState = SelectState.RemoveOpponentPiece;
+                        trenutnoStanje = OdabranoStanje.MicanjeFigure;
                     }
                     else
                     { 
-                        players.SwitchTurns();
+                        igraci.ZamjeniPotez();
                     }
                 }
             }
-            else if (players.PlayerTwo.IsPlayersTurn && players.PlayerTwo.IsComputer)
+            else if (igraci.Igrac2.NaPotezu && igraci.Igrac2.IsComputer)
             {
-                PlayComputer();
+                IgraKompjutor();
             }
         }
 
@@ -293,7 +291,7 @@ namespace MLIN.Views
         {
             var ellipse = sender as Ellipse;
             if (ellipse == null) return;
-            var tile = game.Tiles.FirstOrDefault(t => ellipse.Tag as string == t.TileName);
+            var tile = game.Krugovi.FirstOrDefault(t => ellipse.Tag as string == t.KrugIme);
             if (tile == null) return;
         }
 

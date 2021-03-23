@@ -1,16 +1,16 @@
 ﻿namespace MLIN.Models
 {
-    public enum TileStatus
+    public enum KrugStatus
     {
-        Unoccupied,
+        Prazno,
         P1,
         P2
     }
 
     public enum GameState
     {
-        Placing,
-        Moving,
-        Flying
+        Postavljanje,
+        Kretanje,
+        Skakanje
     }
 }

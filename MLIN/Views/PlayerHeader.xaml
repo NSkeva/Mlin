@@ -30,7 +30,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <local:Tile x:Key="Tile"/>
+        <local:Krug x:Key="Tile"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

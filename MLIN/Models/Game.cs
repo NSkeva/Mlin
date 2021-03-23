@@ -6,13 +6,13 @@ namespace MLIN.Models
     {
         private string winner = "";
         private GameState state;
-        private ReactiveCollection<Tile> tiles;
+        private ReactiveCollection<Krug> krugovi;
 
-        public Tile CurrentlyMovingPiece { get; set; }
+        public Krug CurrentlyMovingPiece { get; set; }
 
         public Game()
         {
-            state = GameState.Placing;
+            state = GameState.Postavljanje;
             CreateTiles();
         }
 
@@ -22,10 +22,10 @@ namespace MLIN.Models
             set { this.RaiseAndSetIfChanged(ref state, value); }
         }
 
-        public ReactiveCollection<Tile> Tiles
+        public ReactiveCollection<Krug> Krugovi
         {
-            get { return tiles; }
-            set { this.RaiseAndSetIfChanged(ref tiles, value); }
+            get { return krugovi; }
+            set { this.RaiseAndSetIfChanged(ref krugovi, value); }
         }
 
         public string Winner
@@ -36,69 +36,69 @@ namespace MLIN.Models
 
         protected void CreateTiles()
         {
-            Tiles = new ReactiveCollection<Tile>(
+            Krugovi = new ReactiveCollection<Krug>(
                 new[]
                 {
                     // Vanjske
-                    new Tile { TileName = "OuterTopLeft", Row = 0, Column = 0 },
-                    new Tile { TileName = "OuterTopMiddle", Row = 0, Column = 3 },
-                    new Tile { TileName = "OuterTopRight", Row = 0, Column = 6 },
-                    new Tile { TileName = "OuterMiddleLeft", Row = 3, Column = 0 },
-                    new Tile { TileName = "OuterMiddleRight", Row = 3, Column = 6 },
-                    new Tile { TileName = "OuterBottomLeft", Row = 6, Column = 0 },
-                    new Tile { TileName = "OuterBottomMiddle", Row = 6, Column = 3 },
-                    new Tile { TileName = "OuterBottomRight", Row = 6, Column = 6 },
+                    new Krug { KrugIme = "OuterTopLeft", Row = 0, Column = 0 },
+                    new Krug { KrugIme = "OuterTopMiddle", Row = 0, Column = 3 },
+                    new Krug { KrugIme = "OuterTopRight", Row = 0, Column = 6 },
+                    new Krug { KrugIme = "OuterMiddleLeft", Row = 3, Column = 0 },
+                    new Krug { KrugIme = "OuterMiddleRight", Row = 3, Column = 6 },
+                    new Krug { KrugIme = "OuterBottomLeft", Row = 6, Column = 0 },
+                    new Krug { KrugIme = "OuterBottomMiddle", Row = 6, Column = 3 },
+                    new Krug { KrugIme = "OuterBottomRight", Row = 6, Column = 6 },
                     // Sredina
-                    new Tile { TileName = "MiddleTopLeft", Row = 1, Column = 1 },
-                    new Tile { TileName = "MiddleTopMiddle", Row = 1, Column = 3 },
-                    new Tile { TileName = "MiddleTopRight", Row = 1, Column = 5 },
-                    new Tile { TileName = "MiddleMiddleLeft", Row = 3, Column = 1 },
-                    new Tile { TileName = "MiddleMiddleRight", Row = 3, Column = 5 },
-                    new Tile { TileName = "MiddleBottomLeft", Row = 5, Column = 1 },
-                    new Tile { TileName = "MiddleBottomMiddle", Row = 5, Column = 3 },
-                    new Tile { TileName = "MiddleBottomRight", Row = 5, Column = 5 },
+                    new Krug { KrugIme = "MiddleTopLeft", Row = 1, Column = 1 },
+                    new Krug { KrugIme = "MiddleTopMiddle", Row = 1, Column = 3 },
+                    new Krug { KrugIme = "MiddleTopRight", Row = 1, Column = 5 },
+                    new Krug { KrugIme = "MiddleMiddleLeft", Row = 3, Column = 1 },
+                    new Krug { KrugIme = "MiddleMiddleRight", Row = 3, Column = 5 },
+                    new Krug { KrugIme = "MiddleBottomLeft", Row = 5, Column = 1 },
+                    new Krug { KrugIme = "MiddleBottomMiddle", Row = 5, Column = 3 },
+                    new Krug { KrugIme = "MiddleBottomRight", Row = 5, Column = 5 },
                     // Unutra
-                    new Tile { TileName = "InnerTopLeft", Row = 2, Column = 2 },
-                    new Tile { TileName = "InnerTopMiddle", Row = 2, Column = 3 },
-                    new Tile { TileName = "InnerTopRight", Row = 2, Column = 4 },
-                    new Tile { TileName = "InnerMiddleLeft", Row = 3, Column = 2 },
-                    new Tile { TileName = "InnerMiddleRight", Row = 3, Column = 4 },
-                    new Tile { TileName = "InnerBottomLeft", Row = 4, Column = 2 },
-                    new Tile { TileName = "InnerBottomMiddle", Row = 4, Column = 3 },
-                    new Tile { TileName = "InnerBottomRight", Row = 4, Column = 4 }
+                    new Krug { KrugIme = "InnerTopLeft", Row = 2, Column = 2 },
+                    new Krug { KrugIme = "InnerTopMiddle", Row = 2, Column = 3 },
+                    new Krug { KrugIme = "InnerTopRight", Row = 2, Column = 4 },
+                    new Krug { KrugIme = "InnerMiddleLeft", Row = 3, Column = 2 },
+                    new Krug { KrugIme = "InnerMiddleRight", Row = 3, Column = 4 },
+                    new Krug { KrugIme = "InnerBottomLeft", Row = 4, Column = 2 },
+                    new Krug { KrugIme = "InnerBottomMiddle", Row = 4, Column = 3 },
+                    new Krug { KrugIme = "InnerBottomRight", Row = 4, Column = 4 }
                 });
 
             // Poveznice
 
             // Vanjske
-            Tiles[0].AdjacentTiles = new[] { Tiles[1], Tiles[3] };
-            Tiles[1].AdjacentTiles = new[] { Tiles[0], Tiles[2], Tiles[9] };
-            Tiles[2].AdjacentTiles = new[] { Tiles[1], Tiles[4] };
-            Tiles[3].AdjacentTiles = new[] { Tiles[0], Tiles[5], Tiles[11] };
-            Tiles[4].AdjacentTiles = new[] { Tiles[2], Tiles[7], Tiles[12] };
-            Tiles[5].AdjacentTiles = new[] { Tiles[3], Tiles[6] };
-            Tiles[6].AdjacentTiles = new[] { Tiles[5], Tiles[7], Tiles[14] };
-            Tiles[7].AdjacentTiles = new[] { Tiles[4], Tiles[6] };
+            Krugovi[0].SusjedniKrugovi = new[] { Krugovi[1], Krugovi[3] };
+            Krugovi[1].SusjedniKrugovi = new[] { Krugovi[0], Krugovi[2], Krugovi[9] };
+            Krugovi[2].SusjedniKrugovi = new[] { Krugovi[1], Krugovi[4] };
+            Krugovi[3].SusjedniKrugovi = new[] { Krugovi[0], Krugovi[5], Krugovi[11] };
+            Krugovi[4].SusjedniKrugovi = new[] { Krugovi[2], Krugovi[7], Krugovi[12] };
+            Krugovi[5].SusjedniKrugovi = new[] { Krugovi[3], Krugovi[6] };
+            Krugovi[6].SusjedniKrugovi = new[] { Krugovi[5], Krugovi[7], Krugovi[14] };
+            Krugovi[7].SusjedniKrugovi = new[] { Krugovi[4], Krugovi[6] };
             // Sredina
-            Tiles[8].AdjacentTiles = new[] { Tiles[9], Tiles[11] };
-            Tiles[9].AdjacentTiles = new[] { Tiles[1], Tiles[8], Tiles[10], Tiles[17] };
-            Tiles[10].AdjacentTiles = new[] { Tiles[9], Tiles[12] };
-            Tiles[11].AdjacentTiles = new[] { Tiles[3], Tiles[8], Tiles[13], Tiles[19] };
-            Tiles[12].AdjacentTiles = new[] { Tiles[4], Tiles[10], Tiles[15], Tiles[20] };
-            Tiles[13].AdjacentTiles = new[] { Tiles[11], Tiles[14] };
-            Tiles[14].AdjacentTiles = new[] { Tiles[6], Tiles[13], Tiles[15], Tiles[22] };
-            Tiles[15].AdjacentTiles = new[] { Tiles[12], Tiles[14] };
+            Krugovi[8].SusjedniKrugovi = new[] { Krugovi[9], Krugovi[11] };
+            Krugovi[9].SusjedniKrugovi = new[] { Krugovi[1], Krugovi[8], Krugovi[10], Krugovi[17] };
+            Krugovi[10].SusjedniKrugovi = new[] { Krugovi[9], Krugovi[12] };
+            Krugovi[11].SusjedniKrugovi = new[] { Krugovi[3], Krugovi[8], Krugovi[13], Krugovi[19] };
+            Krugovi[12].SusjedniKrugovi = new[] { Krugovi[4], Krugovi[10], Krugovi[15], Krugovi[20] };
+            Krugovi[13].SusjedniKrugovi = new[] { Krugovi[11], Krugovi[14] };
+            Krugovi[14].SusjedniKrugovi = new[] { Krugovi[6], Krugovi[13], Krugovi[15], Krugovi[22] };
+            Krugovi[15].SusjedniKrugovi = new[] { Krugovi[12], Krugovi[14] };
             // Unutra
-            Tiles[16].AdjacentTiles = new[] { Tiles[17], Tiles[19] };
-            Tiles[17].AdjacentTiles = new[] { Tiles[9], Tiles[16], Tiles[18] };
-            Tiles[18].AdjacentTiles = new[] { Tiles[17], Tiles[20] };
-            Tiles[19].AdjacentTiles = new[] { Tiles[11], Tiles[16], Tiles[21] };
-            Tiles[20].AdjacentTiles = new[] { Tiles[18], Tiles[12], Tiles[23] };
-            Tiles[21].AdjacentTiles = new[] { Tiles[19], Tiles[22] };
-            Tiles[22].AdjacentTiles = new[] { Tiles[14], Tiles[21], Tiles[23] };
-            Tiles[23].AdjacentTiles = new[] { Tiles[20], Tiles[22] };
+            Krugovi[16].SusjedniKrugovi = new[] { Krugovi[17], Krugovi[19] };
+            Krugovi[17].SusjedniKrugovi = new[] { Krugovi[9], Krugovi[16], Krugovi[18] };
+            Krugovi[18].SusjedniKrugovi = new[] { Krugovi[17], Krugovi[20] };
+            Krugovi[19].SusjedniKrugovi = new[] { Krugovi[11], Krugovi[16], Krugovi[21] };
+            Krugovi[20].SusjedniKrugovi = new[] { Krugovi[18], Krugovi[12], Krugovi[23] };
+            Krugovi[21].SusjedniKrugovi = new[] { Krugovi[19], Krugovi[22] };
+            Krugovi[22].SusjedniKrugovi = new[] { Krugovi[14], Krugovi[21], Krugovi[23] };
+            Krugovi[23].SusjedniKrugovi = new[] { Krugovi[20], Krugovi[22] };
 
-            this.RaisePropertyChanged(x => x.Tiles);
+            this.RaisePropertyChanged(x => x.Krugovi);
         }
     }
 }
