@@ -13,7 +13,7 @@ namespace MLIN.Models
         public Game()
         {
             state = GameState.Postavljanje;
-            CreateTiles();
+            StvoriKrugove();
         }
 
         public GameState State
@@ -34,7 +34,7 @@ namespace MLIN.Models
             set { this.RaiseAndSetIfChanged(ref winner, value);  }
         }
 
-        protected void CreateTiles()
+        protected void StvoriKrugove()
         {
             Krugovi = new ReactiveCollection<Krug>(
                 new[]

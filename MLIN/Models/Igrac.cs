@@ -79,12 +79,12 @@ namespace MLIN.Models
             set { this.RaiseAndSetIfChanged(ref prijeMlinovi, value); }
         }
 
-        private void provjeraMlin(int a, int b, int c, Krug movedTile, KrugStatus ts,ReactiveCollection<Krug> krugovi, ref Mlin tofill)
+        private void provjeraMlin(int a, int b, int c, Krug pomaknutKrug, KrugStatus ts,ReactiveCollection<Krug> krugovi, ref Mlin tofill)
         {
             if (krugovi[a].Status == ts && krugovi[b].Status == ts && krugovi[c].Status == ts &&
-                (movedTile == krugovi[a] ||
-                 movedTile == krugovi[b] ||
-                 movedTile == krugovi[c]))
+                (pomaknutKrug == krugovi[a] ||
+                 pomaknutKrug == krugovi[b] ||
+                 pomaknutKrug == krugovi[c]))
                 tofill = new Mlin(krugovi[a], krugovi[b], krugovi[c]);
         }
 
