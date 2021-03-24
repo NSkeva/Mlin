@@ -42,18 +42,18 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Igrač 1" Style="{StaticResource NameTextBlockStyle}"
-                   Foreground ="{Binding PlayerOne.Background}" />
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding PlayerOne.StatusMessage}" Style="{StaticResource StatusMessageTextBlockStyle}"/>
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Visibility="{Binding PlayerOne.PiecesLeftVisibility}" HorizontalAlignment="Left" Margin="5,0,0,0">
-            <TextBlock Text="Pieces Left" FontSize="12" Foreground="White"/>
-            <TextBlock Text="{Binding PlayerOne.PiecesLeft}" HorizontalAlignment="Center" FontSize="12" Foreground="White"/>
+                   Foreground ="{Binding Igrac1.Background}" />
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Igrac1.StatusMessage}" Style="{StaticResource StatusMessageTextBlockStyle}"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Visibility="{Binding Igrac1.PiecesLeftVisibility}" HorizontalAlignment="Left" Margin="5,0,0,0">
+            <TextBlock Text="OSTALO" FontSize="12" Foreground="White"/>
+            <TextBlock Text="{Binding Igrac1.FiguricaOstalo}" HorizontalAlignment="Center" FontSize="12" Foreground="White"/>
         </StackPanel>
         <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource NameTextBlockStyle}"
-                   Foreground ="{Binding PlayerTwo.Background}" Margin="125,0,127,-32" Grid.RowSpan="2" ><Run Text="Igrač 2"/><LineBreak/><Run/></TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding PlayerTwo.StatusMessage}" Style="{StaticResource StatusMessageTextBlockStyle}"/>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Visibility="{Binding PlayerTwo.PiecesLeftVisibility}" HorizontalAlignment="Right" Margin="0,0,20,0">
-            <TextBlock Text="Pieces Left" FontSize="12" Foreground="White"/>
-            <TextBlock Text="{Binding PlayerTwo.PiecesLeft}" HorizontalAlignment="Center" FontSize="12" Foreground="White"/>
+                   Foreground ="{Binding Igrac2.Background}" Margin="125,0,127,-32" Grid.RowSpan="2" ><Run Text="Igrač 2"/><LineBreak/><Run/></TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Igrac2.StatusMessage}" Style="{StaticResource StatusMessageTextBlockStyle}"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Visibility="{Binding Igrac2.PiecesLeftVisibility}" HorizontalAlignment="Right" Margin="0,0,20,0">
+            <TextBlock Text="OSTALO" FontSize="12" Foreground="White"/>
+            <TextBlock Text="{Binding Igrac2.FiguricaOstalo}" HorizontalAlignment="Center" FontSize="12" Foreground="White"/>
         </StackPanel>
     </Grid>
 </UserControl>

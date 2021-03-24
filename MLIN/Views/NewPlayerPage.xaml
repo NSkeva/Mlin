@@ -62,14 +62,14 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="0" Text="{Binding PlayerOne.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        <TextBox Grid.Row="0" Text="{Binding Igrac1.Ime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  Style="{StaticResource NameTextBoxStyle}" MaxLength="16" MaxLines="1"/>
         <TextBlock Grid.Row="1" Text="VS" Style="{StaticResource TextBlockStyle}"/>
-        <TextBox Grid.Row="2" Text="{Binding PlayerTwo.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        <TextBox Grid.Row="2" Text="{Binding Igrac2.Ime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  Style="{StaticResource NameTextBoxStyle}" MaxLength="16" MaxLines="1"/>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="AI?" FontSize="24" FontWeight="Bold"/>
-            <CheckBox HorizontalAlignment="Center"  IsChecked="{Binding PlayerTwo.IsComputer}">
+            <CheckBox HorizontalAlignment="Center"  IsChecked="{Binding Igrac2.IsComputer}">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="2" ScaleY="2"/>
                 </CheckBox.LayoutTransform>
